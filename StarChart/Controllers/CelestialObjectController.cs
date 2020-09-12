@@ -81,18 +81,18 @@ namespace StarChart.Controllers
             return NoContent();
         }
 
-        [HttpPatch("{id}:{name}")] //izgleda patch e samo nekoj parametar kd se menja, a ne cel objekt
+        [HttpPatch("{id}/{name}")]
         public IActionResult RenameObject(int id, string name)
         {
-            var celestialObject = _context.CelestialObjects.Find(id);
-
-            if (celestialObject == null)
+            var existingObject = _context.CelestialObjects.Find(id);
+            if (existingObject == null)
                 return NotFound();
-            celestialObject.Name = name;
-            _context.CelestialObjects.Update(celestialObject);
+            existingObject.Name = name;
+            _context.CelestialObjects.Update(existingObject);
             _context.SaveChanges();
             return NoContent();
         }
+
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
